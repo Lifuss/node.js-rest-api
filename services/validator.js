@@ -9,9 +9,11 @@ const schemaPost = Joi.object({
     })
     .required(),
   phone: Joi.string()
-    .pattern(/^[0-9]+$/)
-    .min(6)
-    .max(12)
+    .pattern(/^\(\d{3}\) \d{3}-\d{4}$/)
+    .messages({
+      "string.pattern.base":
+        "Phone number must be in the format (123) 456-7890",
+    })
     .required(),
 });
 
@@ -22,7 +24,11 @@ const schemaPut = Joi.object({
     tlds: { allow: ["com", "net", "ua"] },
   }),
   phone: Joi.string()
-    .pattern(/^[0-9]+$/)
+    .pattern(/^\(\d{3}\) \d{3}-\d{4}$/)
+    .messages({
+      "string.pattern.base":
+        "Phone number must be in the format (123) 456-7890",
+    })
     .min(6)
     .max(12),
 });
