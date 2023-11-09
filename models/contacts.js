@@ -34,7 +34,6 @@ const removeContact = async (contactId) => {
 
 const addContact = async (body) => {
   const data = await listContacts();
-  // перевірка чи є контакт в БД по email для уникнення дублів
   const emailValidate = data.find((item) => item.email === body.email);
   if (emailValidate) {
     return { message: "user with this email already exists" };

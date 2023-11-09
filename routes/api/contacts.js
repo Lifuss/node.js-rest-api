@@ -6,7 +6,7 @@ const {
   removeContact,
   updateContact,
 } = require("../../models/contacts");
-const { emptyValidator, schemaPost } = require("./services/validator");
+const { schemaPost, schemaPut } = require("./services/validator");
 
 const router = express.Router();
 
@@ -42,8 +42,10 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/:contactId", async (req, res, next) => {
   const removeById = await removeContact(req.params.contactId);
-  if (removeById === null)
-    return res.status(404).json({ message: "Not found" });
+  if (removeById === null) {
+    res.status(404).json({ message: "Not found" });
+    return;
+  }
 
   res.json({ message: "contact deleted" });
 });
@@ -51,15 +53,18 @@ router.delete("/:contactId", async (req, res, next) => {
 router.put("/:contactId", async (req, res, next) => {
   if (!Object.keys(req.body).length) {
     res.status(400).json({ message: "missing fields to update" });
+    return;
   }
-  // перевіряю якщо ключ прийшов але пустим
-  const validate = emptyValidator(req.body);
-  if (validate) {
-    res.status(400).json({ message: `required field ${validate} is empty` });
+  const { value, error } = schemaPut.validate(req.body);
+  if (error) {
+    res.status(400).json(error.message);
+    return;
   }
-  const update = await updateContact(req.params.contactId, req.body);
-  if (update === null) return res.status(404).json({ message: "Not found" });
-
+  const update = await updateContact(req.params.contactId, value);
+  if (update === null) {
+    res.status(404).json({ message: "Not found" });
+    return;
+  }
   res.json(update);
 });
 
