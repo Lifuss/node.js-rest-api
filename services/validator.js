@@ -14,6 +14,7 @@ const schemaPost = Joi.object({
     .max(12)
     .required(),
 });
+
 const schemaPut = Joi.object({
   name: Joi.string().min(2).max(20),
   email: Joi.string().email({

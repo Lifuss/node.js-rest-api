@@ -6,7 +6,7 @@ const {
   removeContact,
   updateContact,
 } = require("../../models/contacts");
-const { schemaPost, schemaPut } = require("./services/validator");
+const { schemaPost, schemaPut } = require("../../services/validator");
 
 const router = express.Router();
 
