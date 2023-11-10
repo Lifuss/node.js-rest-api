@@ -19,8 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:contactId", async (req, res, next) => {
   const contactById = await getContactById(req.params.contactId);
   if (contactById === null) {
-    // можна і було повертати next() і дійти до мідлвара 404, але раптом на проекті зміниться структура мідлварів
-    return res.status(404).json({ message: "Not found" });
+    next();
   }
   res.json({ contactById });
 });
@@ -43,7 +42,7 @@ router.post("/", async (req, res, next) => {
 router.delete("/:contactId", async (req, res, next) => {
   const removeById = await removeContact(req.params.contactId);
   if (removeById === null) {
-    res.status(404).json({ message: "Not found" });
+    next();
     return;
   }
 
@@ -62,7 +61,7 @@ router.put("/:contactId", async (req, res, next) => {
   }
   const update = await updateContact(req.params.contactId, value);
   if (update === null) {
-    res.status(404).json({ message: "Not found" });
+    next();
     return;
   }
   res.json(update);
