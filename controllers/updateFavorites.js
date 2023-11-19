@@ -4,7 +4,6 @@ const { requestError } = require("../services");
 
 const updateFavorites = async (req, res) => {
   const { value, error } = schemaFavorite.validate(req.body);
-  console.log(value);
 
   if (error) throw requestError(400, error.message);
 
