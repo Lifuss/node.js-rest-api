@@ -1,20 +1,18 @@
-const { updateContact } = require("../models/contacts");
-const { schemaPut } = require("../schemas/validator");
+const { schemaPut } = require("../schemas/JoiValidator");
+const Contact = require("../models/contacts");
+const { requestError } = require("../services");
 
 const updateByID = async (req, res, next) => {
-  if (!Object.keys(req.body).length) {
-    res.status(400).json({ message: "missing fields to update" });
-    return;
-  }
   const { value, error } = schemaPut.validate(req.body);
   if (error) {
-    res.status(400).json(error.message);
-    return;
+    throw requestError(400, error.message);
   }
-  const update = await updateContact(req.params.contactId, value);
-  if (update === null) {
-    next();
-    return;
+
+  const update = await Contact.findByIdAndUpdate(req.params.contactId, value, {
+    new: true,
+  });
+  if (!update) {
+    throw requestError(404);
   }
   res.json(update);
 };

@@ -14,4 +14,6 @@ router.delete("/:contactId", ctrlWrapper(ctrl.removeById));
 
 router.put("/:contactId", ctrlWrapper(ctrl.updateByID));
 
+router.patch("/:contactId/favorite", ctrlWrapper(ctrl.updateFavorites));
+
 module.exports = router;

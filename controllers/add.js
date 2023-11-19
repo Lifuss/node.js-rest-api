@@ -1,19 +1,15 @@
-const { addContact } = require("../models/contacts");
-const { schemaPost } = require("../schemas/validator");
+const Contact = require("../models/contacts");
+const { schemaPost } = require("../schemas/JoiValidator");
+const { requestError } = require("../services");
 
 const add = async (req, res, next) => {
   const { value, error } = schemaPost.validate(req.body);
   if (error) {
-    res.status(400).json(error.message);
-    return;
+    throw requestError(400, error);
   }
-  const newContact = await addContact(value);
-  // перевірка на дубль email в БД
-  if (newContact.message) {
-    res.status(400).json(newContact);
-  } else {
-    res.status(201).json(newContact);
-  }
+  const newContact = await Contact.create(value);
+
+  res.status(201).json(newContact);
 };
 
 module.exports = add;
