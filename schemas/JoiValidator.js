@@ -28,12 +28,15 @@ const schemaPut = Joi.object({
     .messages({
       "string.pattern.base":
         "Phone number must be in the format (123) 456-7890",
-    })
-    .min(6)
-    .max(12),
+    }),
+});
+
+const schemaFavorite = Joi.object({
+  favorite: Joi.boolean().required(),
 });
 
 module.exports = {
   schemaPut,
   schemaPost,
+  schemaFavorite,
 };
