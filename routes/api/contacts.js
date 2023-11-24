@@ -1,5 +1,5 @@
 const express = require("express");
-const ctrl = require("../../controllers/index");
+const ctrl = require("../../controllers/contacts/index");
 const { ctrlWrapper } = require("../../services");
 const validateBody = require("../../middlewares/validateBody");
 const {

@@ -1,4 +1,4 @@
-const updateData = require("../services/updateContact");
+const updateData = require("../../services/updateContact");
 
 const updateFavorites = async (req, res) => {
   const update = await updateData(req);

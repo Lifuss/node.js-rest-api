@@ -35,8 +35,19 @@ const schemaFavorite = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
+const schemaRegister = Joi.object({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "ua"] },
+    })
+    .required(),
+  password: Joi.string().min(2).max(15).required(),
+});
+
 module.exports = {
   schemaPut,
   schemaPost,
   schemaFavorite,
+  schemaRegister,
 };

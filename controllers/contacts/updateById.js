@@ -1,4 +1,4 @@
-const updateData = require("../services/updateContact");
+const updateData = require("../../services/updateContact");
 
 const updateByID = async (req, res, next) => {
   const update = await updateData(req);
