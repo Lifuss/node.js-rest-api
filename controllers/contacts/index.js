@@ -4,8 +4,9 @@ const add = require("./add");
 const removeById = require("./removeById");
 const updateByID = require("./updateById");
 const updateFavorites = require("./updateFavorites");
+const { ctrlWrapper } = require("../../services");
 
-module.exports = {
+const funcs = {
   getAll,
   getById,
   add,
@@ -13,3 +14,9 @@ module.exports = {
   updateByID,
   updateFavorites,
 };
+
+const ctrl = (controller) => {
+  return ctrlWrapper(funcs[controller]);
+};
+
+module.exports = ctrl;
