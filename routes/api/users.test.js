@@ -8,7 +8,7 @@ const User = require("../../models/user");
 
 const { DB_HOST } = process.env;
 
-describe("test login", () => {
+describe("test routes", () => {
   let server = null;
   beforeAll(async () => {
     server = app.listen(3002);
@@ -21,7 +21,7 @@ describe("test login", () => {
   });
 
   afterEach(async () => {
-    // я розумію що видаляю всіх юзерів
+    // я розумію що видаляю всіх юзерів, і таке робити не варто або хоча б міняти на тестову бд
     await User.deleteMany({});
   });
 
