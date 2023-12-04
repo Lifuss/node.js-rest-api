@@ -4,21 +4,29 @@ const {
   schemaRegister,
   subscriptionSchema,
 } = require("../../schemas/JoiValidator");
-const ctrl = require("../../controllers/users");
 const authentication = require("../../middlewares/authentication");
+const {
+  register,
+  login,
+  logout,
+  current,
+  updateSubscription,
+  updateAvatar,
+} = require("../../controllers/users");
+const upload = require("../../middlewares/upload");
 
 const router = express.Router();
 
-router.post("/register", validateBody(schemaRegister), ctrl("register"));
-
-router.post("/login", validateBody(schemaRegister), ctrl("login"));
-router.get("/logout", authentication, ctrl("logout"));
-router.get("/current", authentication, ctrl("current"));
+router.post("/register", validateBody(schemaRegister), register);
+router.post("/login", validateBody(schemaRegister), login);
+router.get("/logout", authentication, logout);
+router.get("/current", authentication, current);
 router.patch(
   "/",
   authentication,
   validateBody(subscriptionSchema),
-  ctrl("updateSubscription")
+  updateSubscription
 );
+router.patch("/avatars", authentication, upload.single("avatar"), updateAvatar);
 
 module.exports = router;
