@@ -53,10 +53,20 @@ const subscriptionSchema = Joi.object({
     .required(),
 });
 
+const verifySchema = Joi.object({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "ua"] },
+    })
+    .required(),
+});
+
 module.exports = {
   schemaPut,
   schemaPost,
   schemaFavorite,
   schemaRegister,
   subscriptionSchema,
+  verifySchema,
 };

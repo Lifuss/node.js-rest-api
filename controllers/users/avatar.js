@@ -3,7 +3,7 @@ const fs = require("fs");
 const User = require("../../models/user");
 const Jimp = require("jimp");
 
-const avatarDir = path.join(__dirname, "../../", "public", "avatars");
+const avatarDir = path.resolve(__dirname, "../../", "public", "avatars");
 
 const avatar = async (req, res) => {
   const { _id } = req.user;
